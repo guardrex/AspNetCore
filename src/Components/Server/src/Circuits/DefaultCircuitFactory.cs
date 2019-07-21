@@ -63,7 +63,7 @@ namespace Microsoft.AspNetCore.Components.Server.Circuits
             if (client.Connected)
             {
                 navigationManaager.AttachJsRuntime(jsRuntime);
-                navigationManaager.InitializeState(
+                navigationManaager.Initialize(
                     uriAbsolute,
                     baseUriAbsolute);
 
@@ -71,7 +71,7 @@ namespace Microsoft.AspNetCore.Components.Server.Circuits
             }
             else
             {
-                navigationManaager.InitializeState(uriAbsolute, baseUriAbsolute);
+                navigationManaager.Initialize(uriAbsolute, baseUriAbsolute);
             }
 
             var rendererRegistry = new RendererRegistry();

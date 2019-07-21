@@ -196,7 +196,7 @@ namespace Microsoft.AspNetCore.Components.Server.Tests.Circuits
                 serviceCollection.AddScoped<NavigationManager>(_ =>
                 {
                     var navigationManager = new RemoteNavigationManager(NullLogger<RemoteNavigationManager>.Instance);
-                    navigationManager.InitializeState(uriAbsolute, baseUriAbsolute);
+                    navigationManager.Initialize(uriAbsolute, baseUriAbsolute);
                     return navigationManager;
                 });
                 var serviceScope = serviceCollection.BuildServiceProvider().CreateScope();
