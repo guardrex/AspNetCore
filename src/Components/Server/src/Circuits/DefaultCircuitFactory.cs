@@ -58,12 +58,12 @@ namespace Microsoft.AspNetCore.Components.Server.Circuits
                 authenticationStateProvider.SetAuthenticationState(Task.FromResult(authenticationState));
             }
 
-            var uriHelper = (RemoteUriHelper)scope.ServiceProvider.GetRequiredService<IUriHelper>();
+            var navigationManaager = (RemoteNavigationManager)scope.ServiceProvider.GetRequiredService<NavigationManager>();
             var navigationInterception = (RemoteNavigationInterception)scope.ServiceProvider.GetRequiredService<INavigationInterception>();
             if (client.Connected)
             {
-                uriHelper.AttachJsRuntime(jsRuntime);
-                uriHelper.InitializeState(
+                navigationManaager.AttachJsRuntime(jsRuntime);
+                navigationManaager.InitializeState(
                     uriAbsolute,
                     baseUriAbsolute);
 
@@ -71,7 +71,7 @@ namespace Microsoft.AspNetCore.Components.Server.Circuits
             }
             else
             {
-                uriHelper.InitializeState(uriAbsolute, baseUriAbsolute);
+                navigationManaager.InitializeState(uriAbsolute, baseUriAbsolute);
             }
 
             var rendererRegistry = new RendererRegistry();

@@ -115,10 +115,10 @@ namespace Microsoft.AspNetCore.Components.Server.Circuits
             {
                 _initialized = true;
                 UnhandledException += unhandledException;
-                var uriHelper = (RemoteUriHelper)Services.GetRequiredService<IUriHelper>();
-                if (!uriHelper.HasAttachedJSRuntime)
+                var navigationManager = (RemoteNavigationManager)Services.GetRequiredService<NavigationManager>();
+                if (!navigationManager.HasAttachedJSRuntime)
                 {
-                    uriHelper.AttachJsRuntime(JSRuntime);
+                    navigationManager.AttachJsRuntime(JSRuntime);
                 }
 
                 var navigationInterception = (RemoteNavigationInterception)Services.GetRequiredService<INavigationInterception>();

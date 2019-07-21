@@ -193,11 +193,11 @@ namespace Microsoft.AspNetCore.Components.Server.Tests.Circuits
             public override CircuitHost CreateCircuitHost(HttpContext httpContext, CircuitClientProxy client, string uriAbsolute, string baseUriAbsolute)
             {
                 var serviceCollection = new ServiceCollection();
-                serviceCollection.AddScoped<IUriHelper>(_ =>
+                serviceCollection.AddScoped<NavigationManager>(_ =>
                 {
-                    var uriHelper = new RemoteUriHelper(NullLogger<RemoteUriHelper>.Instance);
-                    uriHelper.InitializeState(uriAbsolute, baseUriAbsolute);
-                    return uriHelper;
+                    var navigationManager = new RemoteNavigationManager(NullLogger<RemoteNavigationManager>.Instance);
+                    navigationManager.InitializeState(uriAbsolute, baseUriAbsolute);
+                    return navigationManager;
                 });
                 var serviceScope = serviceCollection.BuildServiceProvider().CreateScope();
                 return TestCircuitHost.Create(_circuitIdFactory(), serviceScope);
@@ -219,7 +219,7 @@ namespace Microsoft.AspNetCore.Components.Server.Tests.Circuits
         {
             private RenderHandle _renderHandle;
 
-            [Inject] IUriHelper UriHelper { get; set; }
+            [Inject] NavigationManager NavigationManager { get; set; }
 
             public void Attach(RenderHandle renderHandle)
             {
@@ -231,9 +231,9 @@ namespace Microsoft.AspNetCore.Components.Server.Tests.Circuits
                 _renderHandle.Render(builder =>
                 {
                     builder.AddContent(0, "The current URI is ");
-                    builder.AddContent(1, UriHelper.GetAbsoluteUri());
+                    builder.AddContent(1, NavigationManager.GetAbsoluteUri());
                     builder.AddContent(2, " within base URI ");
-                    builder.AddContent(3, UriHelper.GetBaseUri());
+                    builder.AddContent(3, NavigationManager.GetBaseUri());
                 });
 
                 return Task.CompletedTask;

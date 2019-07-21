@@ -69,10 +69,10 @@ namespace Microsoft.Extensions.DependencyInjection
             // all the abstractions.
             services.AddScoped<IComponentPrerenderer, CircuitPrerenderer>();
 
-            // Standard razor component services implementations
+            // Standard blazor hosting services implementations
             //
             // These intentionally replace the non-interactive versions included in MVC.
-            services.AddScoped<IUriHelper, RemoteUriHelper>();
+            services.AddScoped<NavigationManager, RemoteNavigationManager>();
             services.AddScoped<IJSRuntime, RemoteJSRuntime>();
             services.AddScoped<INavigationInterception, RemoteNavigationInterception>();
             services.AddScoped<IComponentContext, RemoteComponentContext>();

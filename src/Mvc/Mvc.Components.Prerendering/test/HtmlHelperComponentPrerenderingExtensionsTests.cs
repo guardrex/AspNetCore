@@ -291,7 +291,7 @@ namespace Microsoft.AspNetCore.Mvc.ViewFeatures
 
         private class RedirectComponent : ComponentBase
         {
-            [Inject] IUriHelper UriHelper { get; set; }
+            [Inject] NavigationManager NavigationManager { get; set; }
 
             [Parameter] public string RedirectUri { get; set; }
 
