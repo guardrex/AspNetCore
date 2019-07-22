@@ -190,13 +190,13 @@ namespace Microsoft.AspNetCore.Components.Server.Tests.Circuits
                 _circuitIdFactory = circuitIdFactory ?? (() => Guid.NewGuid().ToString());
             }
 
-            public override CircuitHost CreateCircuitHost(HttpContext httpContext, CircuitClientProxy client, string uriAbsolute, string baseUriAbsolute)
+            public override CircuitHost CreateCircuitHost(HttpContext httpContext, CircuitClientProxy client, string baseUriAbsolute, string uriAbsolute)
             {
                 var serviceCollection = new ServiceCollection();
                 serviceCollection.AddScoped<NavigationManager>(_ =>
                 {
                     var navigationManager = new RemoteNavigationManager(NullLogger<RemoteNavigationManager>.Instance);
-                    navigationManager.Initialize(uriAbsolute, baseUriAbsolute);
+                    navigationManager.Initialize(baseUriAbsolute, uriAbsolute);
                     return navigationManager;
                 });
                 var serviceScope = serviceCollection.BuildServiceProvider().CreateScope();
@@ -209,7 +209,7 @@ namespace Microsoft.AspNetCore.Components.Server.Tests.Circuits
             public Mock<IServiceScope> MockServiceScope { get; }
                 = new Mock<IServiceScope>();
 
-            public override CircuitHost CreateCircuitHost(HttpContext httpContext, CircuitClientProxy client, string uriAbsolute, string baseUriAbsolute)
+            public override CircuitHost CreateCircuitHost(HttpContext httpContext, CircuitClientProxy client, string baseUriAbsolute, string uriAbsolute)
             {
                 return TestCircuitHost.Create(Guid.NewGuid().ToString(), MockServiceScope.Object);
             }
@@ -231,9 +231,9 @@ namespace Microsoft.AspNetCore.Components.Server.Tests.Circuits
                 _renderHandle.Render(builder =>
                 {
                     builder.AddContent(0, "The current URI is ");
-                    builder.AddContent(1, NavigationManager.GetAbsoluteUri());
+                    builder.AddContent(1, NavigationManager.Uri);
                     builder.AddContent(2, " within base URI ");
-                    builder.AddContent(3, NavigationManager.GetBaseUri());
+                    builder.AddContent(3, NavigationManager.BaseUri);
                 });
 
                 return Task.CompletedTask;

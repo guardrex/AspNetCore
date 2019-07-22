@@ -39,8 +39,8 @@ namespace Microsoft.AspNetCore.Components.Server.Circuits
         public override CircuitHost CreateCircuitHost(
             HttpContext httpContext,
             CircuitClientProxy client,
-            string uriAbsolute,
-            string baseUriAbsolute)
+            string baseUri,
+            string uri)
         {
             var components = ResolveComponentMetadata(httpContext, client);
 
@@ -64,14 +64,14 @@ namespace Microsoft.AspNetCore.Components.Server.Circuits
             {
                 navigationManaager.AttachJsRuntime(jsRuntime);
                 navigationManaager.Initialize(
-                    uriAbsolute,
-                    baseUriAbsolute);
+                    baseUri,
+                    uri);
 
                 navigationInterception.AttachJSRuntime(jsRuntime);
             }
             else
             {
-                navigationManaager.Initialize(uriAbsolute, baseUriAbsolute);
+                navigationManaager.Initialize(baseUri, uri);
             }
 
             var rendererRegistry = new RendererRegistry();

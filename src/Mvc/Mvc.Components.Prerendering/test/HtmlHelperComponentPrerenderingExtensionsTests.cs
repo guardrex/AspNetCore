@@ -299,7 +299,7 @@ namespace Microsoft.AspNetCore.Mvc.ViewFeatures
 
             protected override void OnInitialized()
             {
-                UriHelper.NavigateTo(RedirectUri, Force);
+                NavigationManager.NavigateTo(RedirectUri, Force);
             }
         }
 
