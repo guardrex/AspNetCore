@@ -58,7 +58,7 @@ namespace Microsoft.AspNetCore.Components.Server.Circuits
                 authenticationStateProvider.SetAuthenticationState(Task.FromResult(authenticationState));
             }
 
-            var navigationManaager = (RemoteNavigationManager)scope.ServiceProvider.GetRequiredService<NavigationManager>();
+            var navigationManager = (RemoteNavigationManager)scope.ServiceProvider.GetRequiredService<NavigationManager>();
             var navigationInterception = (RemoteNavigationInterception)scope.ServiceProvider.GetRequiredService<INavigationInterception>();
             if (client.Connected)
             {
